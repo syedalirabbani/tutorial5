@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>WOD Tracker</title>
+
+<!--------------------------------------CUSTOM CSS STARTS----------------------------------->
+
+  	<style type="text/css">
+
+  			#formInput{
+  				width: 30em;
+  				margin: 2em auto;
+  			}
+
+  			#dRes{
+  				width: 30em;
+  				margin: 2em auto;
+  				text-align: center;
+  				
+  			}
+
+  			#det{
+  				width: 20em;
+  				margin: 2em auto;
+  				text-align: center;
+  			}
+
+  			#btn{
+  				margin-bottom: 2em;
+  			}
+
+
+
+
+
+
+
+
+
+
+
+  	</style>
+
+
+  </head>
+
+
+
+<!------------------------------------------CONTENT----------------------------------------->
+
+  <body>  
+    
+
+    <div class="container">
+    	<h1 class="text-center" >WOD</h1>
+   
+
+<!------------------------------------------- FORM INPUT-------------------------------------->
+    <div id="formInput" >
+  	<div class="mb-3">
+    	<label for="exerciseName" class="form-label">Exercise name</label>
+    	<input type="text" class="form-control" id="exerciseName" placeholder=" Type exercise name here..">
+    	
+  	</div>
+
+  	<div class="mb-1">
+    	<label for="exerciseDesc" class="form-label">Description</label>
+    	<textarea class="form-control"  id="exerciseDesc" rows="3" placeholder="Type description here.."></textarea>
+  	</div>
+
+ 	<div class="mb-3">
+    	<input type="text" class="form-control" id="assignee" placeholder="Place assignee here..">
+  	</div>
+
+  	<div class="mb-3">
+    	<input type="text" class="form-control" id="difficulty" placeholder="Difficulty (eg: Easy, Medium, hard, etc..)">
+  	</div>
+
+ 	 <button onclick="assignTask()" class="btn btn-primary">Add</button>
+  	</div>
+  	</div>
+  	<hr>
+  	<br>
+
+<!-----------------------------------INPUT RESULT (TABLE)----------------------------------->
+
+<div class="container">
+ 
+<table class="table" style="text-align: center;">
+  <thead>
+    <tr>
+      
+      <th>WOD</th>
+      <th>Assignee</th>
+      <th>Difficulty</th>
+      <th>Details</th>
+      <th>Status</th>
+      
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+    
+  </tbody>
+</table>
+</div>
+
+<br>
+<hr>
+
+<!-----------------------------------DETAILED RESULT ------------------------------------>
+
+<div id="dRes" class="container" hidden="true">
+	<br>
+	<div id="det" style="text-align: center;">
+	<h5 id="dTitle"></h5>
+	<h5 id="dAssignee"></h5>
+	<h5 id="dDesc" ></h5>
+	<h5 id="dStat"></h5>
+	</div>
+
+<!--	<div id="btn">
+	<button onclick="done()" class="btn btn-success" style="margin-bottom: 2em" id="btnDone">Mark as done</button>
+	<button onclick="del()" class="btn btn-danger" style="margin-bottom: 2em" id="btnDel">Delete</button>
+	
+	</div>  -->
+</div>
+
+
+
+<!-----------------------------------DOM TABLEBODY-------------------------------------->
+    <script type="text/javascript">
+    	
+    	function assignTask(){
+
+
+
+    		// 1) Get value from input
+
+    		var wod = document.getElementById("exerciseName").value;
+    		var assign = document.getElementById("assignee").value;
+    		var diff = document.getElementById("difficulty").value;
+    		var detTitle = document.getElementById("exerciseName").value;
+    		var detAssignee = document.getElementById("assignee").value;
+    		var detDesc = document.getElementById("exerciseDesc").value;
+    		 
+    		
+
+    		// 2) create element td x 3
+    		var td1 = document.createElement("td");
+    		var td2 = document.createElement("td");
+    		var td3 = document.createElement("td");
+    		var td4 = document.createElement("button");
+    		var tdDone = document.createElement("button");
+    		var tdDel = document.createElement("button");
+    		var detH1 = document.createElement("p");
+    		var detH2 = document.createElement("p");
+    		var detH3 = document.createElement("p");
+    		var pDone = document.createElement("td");
+    		
+    		
+    		
+
+    		// 3) inside td put innerHTML(1) x 3
+    		td1.innerHTML = wod;
+    		td2.innerHTML = assign;
+    		td3.innerHTML = diff;
+    		td4.innerHTML = "Show" 
+    		td4.style.backgroundColor = "orange"
+
+    		tdDone.innerHTML = "Mark as done" 
+    		tdDone.classList.add("btn-success")
+    		tdDone.style.margin= "1em"
+
+    		tdDel.innerHTML = "Delete"
+    		tdDel.classList.add("btn-danger")
+
+    		detH1.innerHTML = "Title : "+detTitle 
+    		detH2.innerHTML = "Assignee : "+detAssignee 
+    		detH3.innerHTML = "Description : "+detDesc 
+
+    		pDone.innerHTML = "Done" 
+    		pDone.style.backgroundColor = "green";
+    		pDone.style.color = "white";
+
+    		                                                                          		
+
+
+    		// 4) create tr 
+
+    		var newTr = document.createElement("tr");
+    		var newP = document.createElement("p");
+    		
+
+
+
+
+    		// 5) append td to tr
+
+    		newTr.appendChild(td1);
+    		newTr.appendChild(td2);
+    		newTr.appendChild(td3);
+    		newTr.appendChild(td4);
+    		
+
+
+    		td4.addEventListener("click", function(){
+
+    			document.getElementById("dRes").removeAttribute("hidden")
+    			newP.appendChild(detH1);
+    			newP.appendChild(detH2);
+    			newP.appendChild(detH3);
+    			newP.appendChild(tdDone);
+    			newP.appendChild(tdDel);
+
+
+    		});
+
+    		tdDone.addEventListener("click", function(){
+
+    			newTr.appendChild(pDone);
+    			newP.remove()
+    			//newP.setAttribute("hidden",true);
+    		})
+
+    		tdDel.addEventListener("click", function(){
+
+    			
+    			newTr.remove()
+    			newP.remove()
+    			//newTr.setAttribute("hidden",true);
+    			//newP.setAttribute("hidden", true);
+    		})
+
+    		
+    		
+    		// 6) append td to tbody
+
+    		document.getElementById("tableBody").appendChild(newTr);
+    		document.getElementById("dTitle").appendChild(newP);
+
+
+    		// clear each time 'add' is pressed
+    		document.getElementById("exerciseName").value =""
+    		document.getElementById("assignee").value = ""
+    		document.getElementById("difficulty").value =""
+    		document.getElementById("exerciseDesc").value = ""
+    		
+
+    	}
+
+
+
+
+    	
+
+
+
+
+
+
+    </script>
+
+   </div>  
+  </body>
+</html>;
